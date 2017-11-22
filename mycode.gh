@@ -1,6 +1,7 @@
 int x=10.5;
 if(x == y);
 in x;
+in x;
 out (x+y);
 loop (10);
 int z=(y/5)+10;
