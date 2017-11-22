@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1511196831 source:c:\users\abdo\documents\codeblocks\lex\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<stack>
+	<map>
+	<string.h>
+
+1511196871 source:c:\users\abdo\documents\codeblocks\lex\untitled3.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<stack>
+	<map>
+	<string.h>
+
+1511379400 source:c:\users\abdo\desktop\lex\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<stack>
+	<map>
+	<string.h>
+	<iomanip>
+
