@@ -164,7 +164,7 @@ void build_parser_table(){
     table1["Y"]["&"]=v;
 }
 
-void comman_grouping (){ //bally
+void command_grouping (){ //bally
     int j=0;
     while(true){
         vector<string> command;
@@ -427,7 +427,7 @@ int main(){
         cout<<tokens[i]<<"\t \t"<<types[i]<<endl;
     }
 
-    comman_grouping();
+    command_grouping();
 
     build_parser_table();
 
