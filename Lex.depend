@@ -17,7 +17,7 @@
 	<map>
 	<string.h>
 
-1511379400 source:c:\users\abdo\desktop\lex\main.cpp
+1511419177 source:c:\users\abdo\desktop\lex\main.cpp
 	<iostream>
 	<fstream>
 	<string>
@@ -27,7 +27,32 @@
 	<string.h>
 	<iomanip>
 
-1511418729 source:d:\github\compiler\main.cpp
+1511387971 c:\users\abdo\desktop\lex\parsetree.h
+	<iostream>
+	<stdlib.h>
+	<vector>
+	<string>
+	"postfix.h"
+
+1511388412 c:\users\abdo\desktop\lex\postfix.h
+	<string.h>
+	<stack>
+	<string>
+	<iostream>
+	<vector>
+	"parsetree.h"
+
+1511429259 source:d:\3rdcomp\compilers\lex\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<stack>
+	<map>
+	<string.h>
+	<iomanip>
+
+1511527595 source:c:\users\abdo\desktop\compiler project\main.cpp
 	<iostream>
 	<fstream>
 	<string>

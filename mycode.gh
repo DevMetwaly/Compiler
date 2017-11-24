@@ -1,7 +1,9 @@
-int x=10.5;
-if(x == y);
-in x;
-in x;
-out (x+y);
-loop (10);
-int z=(y/5)+10;
+int x = 10;
+if(x >= 3){
+	int x=10;
+	int y=50;
+	if(lll>=3){
+		int f=10;
+	}
+}
+int y=(x+z)+10;
