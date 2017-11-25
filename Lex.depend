@@ -62,3 +62,13 @@
 	<string.h>
 	<iomanip>
 
+1511567046 source:e:\study\cce 3rd year\compilers\project\compiler\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<stack>
+	<map>
+	<string.h>
+	<iomanip>
+

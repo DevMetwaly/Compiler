@@ -2,7 +2,7 @@ int x = 10;
 if(x >= 3){
 	int x=10;
 	int y=50;
-	if(lll>=3){
+	if(y<=3){
 		int f=10;
 	}
 }
