@@ -1,0 +1,80 @@
+S -> int Z
+S -> float Z
+S -> if J
+J -> ( E )
+Z-> identifier H
+H-> = E
+E -> T X
+T -> ( E )
+T -> M Y
+M -> id K
+M -> identifier K
+K -> op F
+K -> ''
+F -> id
+F -> identifier 
+X -> + E
+X -> | E
+X -> ''
+Y -> * T
+Y -> & T
+Y -> ''
+
+
+S-> loop E
+S-> in E
+S-> out E
+E -> T E'
+E' -> + T E'
+E' -> ''
+T -> F T'
+T' -> * F T'
+T' -> ''
+F -> ( E )
+F -> id
+
+S-> loop E
+S-> in E
+S-> out E
+E -> T X
+X -> + E
+X -> ''
+T -> id Y
+T -> ( E )
+Y -> * T
+Y -> ''
+
+
+
+
+last 
+
+S -> int Z
+S -> float Z
+S -> if J
+S -> loop E
+S -> out E
+S -> in identifier
+J -> ( E )
+Z-> identifier H
+H-> = E
+E -> T X
+T -> ( E )
+T -> M Y
+M -> id K
+M -> identifier K
+K -> == F
+K -> <= F
+K -> >= F
+K -> != F
+K -> ''
+F -> id
+F -> identifier 
+X -> + E
+X -> - E
+X -> | E
+X -> ''
+Y -> * T
+Y -> / T
+Y -> & T
+Y -> ''
