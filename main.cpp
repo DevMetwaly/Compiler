@@ -16,206 +16,257 @@ vector<vector<string> > commands;
 vector<vector<string> > ctypes;
 
 struct pairLR{
-    string action;
-    string num;
+    string s;
+    string n;
 };
 
 map<string, map <string,vector<string> > >table1;
-
 map<string, map <string, pairLR > >tableLR;
+vector<pairLR>rules;
 
 void build_LR(){
     pairLR p;
 //td
-    p.action="s";
-    p.num="2";
+    p.s="s";
+    p.n="2";
     tableLR["0"]["int"]=p;
 //td
-    p.action="s";
-    p.num="3";
+    p.s="s";
+    p.n="3";
     tableLR["0"]["float"]=p;
 //td
-    p.action="g";
-    p.num="1";
+    p.s="g";
+    p.n="1";
     tableLR["0"]["S"]=p;
 //td
-    p.action="acc";
-    p.num="0";
+    p.s="acc";
+    p.n="0";
     tableLR["1"]["S"]=p;
 //td
-    p.action="s";
-    p.num="5";
+    p.s="s";
+    p.n="5";
     tableLR["2"]["identifier"]=p;
 //td
-    p.action="g";
-    p.num="4";
+    p.s="g";
+    p.n="4";
     tableLR["2"]["Z"]=p;
 //td
-    p.action="s";
-    p.num="5";
+    p.s="s";
+    p.n="5";
     tableLR["3"]["identifier"]=p;
 //td
-    p.action="g";
-    p.num="5";
+    p.s="g";
+    p.n="5";
     tableLR["3"]["Z"]=p;
 //td
-    p.action="r";
-    p.num="1";
+    p.s="r";
+    p.n="1";
     tableLR["4"][";"]=p;
 //td
-    p.action="s";
-    p.num="8";
+    p.s="s";
+    p.n="8";
     tableLR["5"]["="]=p;
 //td
-    p.action="g";
-    p.num="7";
+    p.s="g";
+    p.n="7";
     tableLR["5"]["X"]=p;
 //td
-    p.action="r";
-    p.num="2";
+    p.s="r";
+    p.n="2";
     tableLR["6"][";"]=p;
 //td
-    p.action="r";
-    p.num="3";
+    p.s="r";
+    p.n="3";
     tableLR["7"][";"]=p;
 //td
-    p.action="s";
-    p.num="11";
+    p.s="s";
+    p.n="11";
     tableLR["8"]["identifier"]=p;
 //td
-    p.action="s";
-    p.num="10";
+    p.s="s";
+    p.n="10";
     tableLR["8"]["id"]=p;
 //td
-    p.action="g";
-    p.num="9";
+    p.s="g";
+    p.n="9";
     tableLR["8"]["E"]=p;
 //td
-    p.action="r";
-    p.num="4";
+    p.s="r";
+    p.n="4";
     tableLR["9"][";"]=p;
 //td
-    p.action="s";
-    p.num="13";
+    p.s="s";
+    p.n="13";
     tableLR["10"]["+"]=p;
 //td
-    p.action="s";
-    p.num="14";
+    p.s="s";
+    p.n="14";
     tableLR["10"]["-"]=p;
 //td
-    p.action="s";
-    p.num="15";
+    p.s="s";
+    p.n="15";
     tableLR["10"]["/"]=p;
 //td
-    p.action="s";
-    p.num="16";
+    p.s="s";
+    p.n="16";
     tableLR["10"]["*"]=p;
 //td
-    p.action="r";
-    p.num="11";
+    p.s="r";
+    p.n="11";
     tableLR["10"][";"]=p;
 //td
-    p.action="g";
-    p.num="12";
+    p.s="g";
+    p.n="12";
     tableLR["10"]["Y"]=p;
 //td
-    p.action="s";
-    p.num="13";
+    p.s="s";
+    p.n="13";
     tableLR["11"]["+"]=p;
 //td
-    p.action="s";
-    p.num="14";
+    p.s="s";
+    p.n="14";
     tableLR["11"]["-"]=p;
 //td
-    p.action="s";
-    p.num="15";
+    p.s="s";
+    p.n="15";
     tableLR["11"]["/"]=p;
 //td
-    p.action="s";
-    p.num="16";
+    p.s="s";
+    p.n="16";
     tableLR["11"]["*"]=p;
 //td
-    p.action="r";
-    p.num="11";
+    p.s="r";
+    p.n="11";
     tableLR["11"][";"]=p;
 //td
-    p.action="g";
-    p.num="17";
+    p.s="g";
+    p.n="17";
     tableLR["11"]["Y"]=p;
 //td
-    p.action="r";
-    p.num="5";
+    p.s="r";
+    p.n="5";
     tableLR["12"][";"]=p;
 //td
-    p.action="s";
-    p.num="11";
+    p.s="s";
+    p.n="11";
     tableLR["13"]["identifier"]=p;
 //td
-    p.action="s";
-    p.num="10";
+    p.s="s";
+    p.n="10";
     tableLR["13"]["id"]=p;
 //td
-    p.action="g";
-    p.num="18";
+    p.s="g";
+    p.n="18";
     tableLR["13"]["E"]=p;
 //td
-    p.action="s";
-    p.num="11";
+    p.s="s";
+    p.n="11";
     tableLR["14"]["identifier"]=p;
 //td
-    p.action="s";
-    p.num="10";
+    p.s="s";
+    p.n="10";
     tableLR["14"]["id"]=p;
 //td
-    p.action="g";
-    p.num="19";
+    p.s="g";
+    p.n="19";
     tableLR["14"]["E"]=p;
 //td
-    p.action="s";
-    p.num="11";
+    p.s="s";
+    p.n="11";
     tableLR["15"]["identifier"]=p;
 //td
-    p.action="s";
-    p.num="10";
+    p.s="s";
+    p.n="10";
     tableLR["15"]["id"]=p;
 //td
-    p.action="g";
-    p.num="20";
+    p.s="g";
+    p.n="20";
     tableLR["15"]["E"]=p;
 //td
-    p.action="s";
-    p.num="11";
+    p.s="s";
+    p.n="11";
     tableLR["16"]["identifier"]=p;
 //td
-    p.action="s";
-    p.num="10";
+    p.s="s";
+    p.n="10";
     tableLR["16"]["id"]=p;
 //td
-    p.action="g";
-    p.num="21";
+    p.s="g";
+    p.n="21";
     tableLR["16"]["E"]=p;
 //td
-    p.action="r";
-    p.num="6";
+    p.s="r";
+    p.n="6";
     tableLR["17"][";"]=p;
 //td
-    p.action="r";
-    p.num="7";
+    p.s="r";
+    p.n="7";
     tableLR["18"][";"]=p;
 //td
-    p.action="r";
-    p.num="8";
+    p.s="r";
+    p.n="8";
     tableLR["19"][";"]=p;
 //td
-    p.action="r";
-    p.num="9";
+    p.s="r";
+    p.n="9";
     tableLR["20"][";"]=p;
 //td
-    p.action="r";
-    p.num="10";
+    p.s="r";
+    p.n="10";
     tableLR["21"][";"]=p;
 }
 
+void build_LR_rules(){
+    pairLR p;
+
+    p.s="A";
+    p.n="1";
+    rules.push_back(p);
+
+    p.s="S";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="S";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="Z";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="X";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="E";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="E";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="Y";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="Y";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="Y";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="Y";
+    p.n="2";
+    rules.push_back(p);
+
+    p.s="Y";
+    p.n="1";
+    rules.push_back(p);
+}
 
 void build_parser_table(){
     vector <string> v;
@@ -771,7 +822,6 @@ class TreeNode
 };
 
 
-
 int k;
 void expTree(TreeNode *root, vector<string>s){
     if(k<0) return;
@@ -801,7 +851,6 @@ void expTree(TreeNode *root, vector<string>s){
     }
 }
 
-
 //Function to return precedence of operators
 int prec(char c){
     if(c == '^')
@@ -819,6 +868,7 @@ int prec(char c){
     else
         return -1;
 }
+
 // The main function to convert infix expression
 //to postfix expression
 string infixToPostfix(string s){
