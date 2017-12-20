@@ -1,0 +1,29 @@
+A -> S
+
+S -> int Z
+
+S -> float Z
+
+Z -> identifier H
+
+H -> = E
+
+E -> T X
+
+T -> ( E )
+
+F -> id
+
+F -> identifier 
+
+X -> + E
+
+X -> - E
+
+X -> ''
+
+Y -> * T
+
+Y -> / T
+
+Y -> ''
