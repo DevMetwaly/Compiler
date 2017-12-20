@@ -13,18 +13,207 @@ vector<string>types;
 vector<vector<string> > commands;
 vector<vector<string> > ctypes;
 
-struct Pair{
-    string s;
-    int n;
+struct pairLR{
+    string action;
+    string num;
 };
 
 map<string, map <string,vector<string> > >table1;
 
-map<string, map <string, Pair > >tableLR;
+map<string, map <string, pairLR > >tableLR;
 
 void build_LR(){
-
+    pairLR p;
+//td
+    p.action="s";
+    p.num="2";
+    tableLR["0"]["int"]=p;
+//td
+    p.action="s";
+    p.num="3";
+    tableLR["0"]["float"]=p;
+//td
+    p.action="g";
+    p.num="1";
+    tableLR["0"]["S"]=p;
+//td
+    p.action="acc";
+    p.num="0";
+    tableLR["1"]["S"]=p;
+//td
+    p.action="s";
+    p.num="5";
+    tableLR["2"]["identifier"]=p;
+//td
+    p.action="g";
+    p.num="4";
+    tableLR["2"]["Z"]=p;
+//td
+    p.action="s";
+    p.num="5";
+    tableLR["3"]["identifier"]=p;
+//td
+    p.action="g";
+    p.num="5";
+    tableLR["3"]["Z"]=p;
+//td
+    p.action="r";
+    p.num="1";
+    tableLR["4"][";"]=p;
+//td
+    p.action="s";
+    p.num="8";
+    tableLR["5"]["="]=p;
+//td
+    p.action="g";
+    p.num="7";
+    tableLR["5"]["X"]=p;
+//td
+    p.action="r";
+    p.num="2";
+    tableLR["6"][";"]=p;
+//td
+    p.action="r";
+    p.num="3";
+    tableLR["7"][";"]=p;
+//td
+    p.action="s";
+    p.num="11";
+    tableLR["8"]["identifier"]=p;
+//td
+    p.action="s";
+    p.num="10";
+    tableLR["8"]["id"]=p;
+//td
+    p.action="g";
+    p.num="9";
+    tableLR["8"]["E"]=p;
+//td
+    p.action="r";
+    p.num="4";
+    tableLR["9"][";"]=p;
+//td
+    p.action="s";
+    p.num="13";
+    tableLR["10"]["+"]=p;
+//td
+    p.action="s";
+    p.num="14";
+    tableLR["10"]["-"]=p;
+//td
+    p.action="s";
+    p.num="15";
+    tableLR["10"]["/"]=p;
+//td
+    p.action="s";
+    p.num="16";
+    tableLR["10"]["*"]=p;
+//td
+    p.action="r";
+    p.num="11";
+    tableLR["10"][";"]=p;
+//td
+    p.action="g";
+    p.num="12";
+    tableLR["10"]["Y"]=p;
+//td
+    p.action="s";
+    p.num="13";
+    tableLR["11"]["+"]=p;
+//td
+    p.action="s";
+    p.num="14";
+    tableLR["11"]["-"]=p;
+//td
+    p.action="s";
+    p.num="15";
+    tableLR["11"]["/"]=p;
+//td
+    p.action="s";
+    p.num="16";
+    tableLR["11"]["*"]=p;
+//td
+    p.action="r";
+    p.num="11";
+    tableLR["11"][";"]=p;
+//td
+    p.action="g";
+    p.num="17";
+    tableLR["11"]["Y"]=p;
+//td
+    p.action="r";
+    p.num="5";
+    tableLR["12"][";"]=p;
+//td
+    p.action="s";
+    p.num="11";
+    tableLR["13"]["identifier"]=p;
+//td
+    p.action="s";
+    p.num="10";
+    tableLR["13"]["id"]=p;
+//td
+    p.action="g";
+    p.num="18";
+    tableLR["13"]["E"]=p;
+//td
+    p.action="s";
+    p.num="11";
+    tableLR["14"]["identifier"]=p;
+//td
+    p.action="s";
+    p.num="10";
+    tableLR["14"]["id"]=p;
+//td
+    p.action="g";
+    p.num="19";
+    tableLR["14"]["E"]=p;
+//td
+    p.action="s";
+    p.num="11";
+    tableLR["15"]["identifier"]=p;
+//td
+    p.action="s";
+    p.num="10";
+    tableLR["15"]["id"]=p;
+//td
+    p.action="g";
+    p.num="20";
+    tableLR["15"]["E"]=p;
+//td
+    p.action="s";
+    p.num="11";
+    tableLR["16"]["identifier"]=p;
+//td
+    p.action="s";
+    p.num="10";
+    tableLR["16"]["id"]=p;
+//td
+    p.action="g";
+    p.num="21";
+    tableLR["16"]["E"]=p;
+//td
+    p.action="r";
+    p.num="6";
+    tableLR["17"][";"]=p;
+//td
+    p.action="r";
+    p.num="7";
+    tableLR["18"][";"]=p;
+//td
+    p.action="r";
+    p.num="8";
+    tableLR["19"][";"]=p;
+//td
+    p.action="r";
+    p.num="9";
+    tableLR["20"][";"]=p;
+//td
+    p.action="r";
+    p.num="10";
+    tableLR["21"][";"]=p;
 }
+
 
 void build_parser_table(){
     vector <string> v;
