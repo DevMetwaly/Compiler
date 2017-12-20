@@ -6,7 +6,6 @@
 #include <map>
 #include <string.h>
 #include <iomanip>
-
 using namespace std;
 
 vector<string>tokens;
@@ -14,8 +13,18 @@ vector<string>types;
 vector<vector<string> > commands;
 vector<vector<string> > ctypes;
 
+struct Pair{
+    string s;
+    int n;
+};
+
 map<string, map <string,vector<string> > >table1;
 
+map<string, map <string, Pair > >tableLR;
+
+void build_LR(){
+
+}
 
 void build_parser_table(){
     vector <string> v;
@@ -527,7 +536,7 @@ void expTree(TreeNode *root, vector<string>s){
     if(k<0) return;
     TreeNode *node = root;
 
-    if(s[k]=="*" || s[k]=="/" || s[k]=="+" || s[k]=="-" || s[k]=="^"){
+    if(s[k]=="*" || s[k]=="/" || s[k]=="+" || s[k]=="-" || s[k]=="^" || s[k]=="==" || s[k]==">" || s[k]=="<" || s[k]=="<=" || s[k]==">=" || s[k]=="==" || s[k]=="+=" || s[k]=="-=" || s[k]=="="){
         node->setToken(s[k]);
         node->setType("operator");
         k--;
@@ -556,13 +565,19 @@ void expTree(TreeNode *root, vector<string>s){
 int prec(char c)
 {
     if(c == '^')
-    return 3;
+        return 6;
     else if(c == '*' || c == '/')
-    return 2;
+        return 5;
     else if(c == '+' || c == '-')
-    return 1;
+        return 4;
+    else if(c == '>' || c == '<' || c == '=' || c == '#' || c == '@' || c == '$' || c == '~' || c == '`')
+        return 3;
+    else if(c == '&')
+        return 2;
+    else if(c == '|')
+        return 1;
     else
-    return -1;
+        return -1;
 }
 // The main function to convert infix expression
 //to postfix expression
@@ -571,6 +586,50 @@ string infixToPostfix(string s)
     stack<char> st;
     st.push('N');
     int l = s.length();
+    string d;
+    for (int i=0; i < l; i++){
+        // Exchange >= with $
+        if(s[i]=='>' && i+1<l){
+            if(s[i+1]=='='){
+                d+='$';
+                i++; continue;
+            }
+        }
+        // Exchange <= with #
+        else if(s[i]=='<' && i+1<l){
+            if(s[i+1]=='='){
+                d+='#';
+                i++; continue;
+            }
+        }
+        // Exchange == with @
+        else if(s[i]=='=' && i+1<l){
+            if(s[i+1]=='='){
+                d+='@';
+                i++; continue;
+            }
+        }
+        // Exchange += with ~
+        else if(s[i]=='+' && i+1<l){
+            if(s[i+1]=='='){
+                d+='~';
+                i++; continue;
+            }
+        }
+        // Exchange -= with `
+        else if(s[i]=='-' && i+1<l){
+            if(s[i+1]=='='){
+                d+='`';
+                i++; continue;
+            }
+        }
+
+        d+=s[i];
+
+    }
+
+    s=d;
+    l = s.length();
     string ns;
     for(int i = 0; i < l; i++)
     {
@@ -630,7 +689,31 @@ string infixToPostfix(string s)
         ns += " ";
     }
 
-    return ns;
+    d="";
+    for (int i=0; i < ns.length(); i++){
+        switch(ns[i]){
+            case '$':
+                d+=">=";
+                break;
+            case '#':
+                d+="<=";
+                break;
+            case '@':
+                d+="==";
+                break;
+            case '~':
+                d+="+=";
+                break;
+            case '`':
+                d+="-=";
+                break;
+            default:
+                d+=ns[i];
+                break;
+        }
+    }
+
+    return d;
 
 }
 
@@ -664,7 +747,6 @@ void generateTree(TreeNode *parent){
     while(currentTok<tokens.size()){
 
         if(tokens[currentTok]=="}") {
-                //cout<<types[currentTok]<<currentTok<<endl;
                 currentTok++;
                 return;
         }
@@ -676,57 +758,63 @@ void generateTree(TreeNode *parent){
             continue;
         }
 
-        if(tokens[currentTok]=="int" || tokens[currentTok]=="float"){
-
-            node->setToken(tokens[currentTok]) ; node->setType("datatype") ;
-            currentTok++;
-
-            TreeNode *var = new TreeNode(tokens[currentTok],"identifier");
-            currentTok++;
-            node->appendChild(var);
-
-            if(tokens[currentTok]!=";"){
-                currentTok++; //Skip assign
-                string s;
-                while(tokens[currentTok]!=";"){
-                    s+=tokens[currentTok];
-                    currentTok++;
-                }
-                TreeNode *val = infixHandle(s);
-                node->appendChild(val);
-            }
-            currentTok++; //Skip separator
-
-            return;
-        }
-
         if(types[currentTok]=="keyword"){
 
-            //Should be changed to Loop until operator, fix them
-            node->setToken(tokens[currentTok]) ; node->setType("keyword") ;
-
-            currentTok+=3;
-
-            TreeNode *op = new TreeNode(tokens[currentTok],"operator");
-            currentTok--;
-            TreeNode *opLeft = new TreeNode(tokens[currentTok],types[currentTok]);
-            currentTok+=2;
-            TreeNode *opRight = new TreeNode(tokens[currentTok],types[currentTok]);
-
-            op->appendChild(opLeft);
-            op->appendChild(opRight);
-            node->appendChild(op);
-
-            currentTok+=2;
-
-            if(tokens[currentTok]=="{"){
-
-                TreeNode *block = new TreeNode("code", "block");
-                node->appendChild(block);
+            if(tokens[currentTok]=="int" || tokens[currentTok]=="float"){
+                node->setToken(tokens[currentTok]) ; node->setType("datatype") ;
                 currentTok++;
-                generateTree(block);
+
+                    string s;
+                    while(tokens[currentTok]!=";"){
+                        s+=tokens[currentTok];
+                        currentTok++;
+                    }
+                    TreeNode *val = infixHandle(s);
+                    node->appendChild(val);
+
+                currentTok++; //Skip separator
+
+                return;
             }
-            return;
+
+            else if(tokens[currentTok]=="if" || tokens[currentTok]=="loop"){
+
+
+                node->setToken(tokens[currentTok]) ; node->setType("keyword") ;
+                currentTok++;
+                if(tokens[currentTok]=="("){
+                    currentTok++;
+                    string s;
+                    while(tokens[currentTok]!=")"){
+                        s+=tokens[currentTok];
+                        currentTok++;
+                    }
+                    TreeNode *condition = infixHandle(s);
+                    node->appendChild(condition);
+                    currentTok++;
+                }
+
+                if(tokens[currentTok]=="{"){
+
+                    TreeNode *block = new TreeNode("code", "block");
+                    node->appendChild(block);
+                    currentTok++;
+                    generateTree(block);
+                }
+                return;
+            }
+
+            else if(tokens[currentTok]=="else"){
+                currentTok++;
+                if(tokens[currentTok]=="{"){
+
+                    TreeNode *block = new TreeNode("code", "block");
+                    node->appendChild(block);
+                    currentTok++;
+                    generateTree(block);
+                }
+                return;
+            }
         }
     }
 }
@@ -765,27 +853,20 @@ int main(){
     }
 
     cout<<"\n---ALGORITHM PREVIEW---\n\n";
-
+    int fail = 0;
     for(int i=0;i<commands.size();i++){
         if(parser(ctypes[i],commands[i],table1)) cout<<"success 1\n";
-        else cout<<"Fail\n";
+        else { cout<<"Fail\n"; fail = 1; }
         cout<<"\n\n\n";
     }
     file.close();
 
-    tokens.clear();
-    types.clear();
-    file.open("mycode1.gh");
-    while(getline(file,line)){
-        line+=" ";
-        separation(line);
+    if(!fail){
+        cout<<"\n\n----TREE DFS----\n\n";
+        TreeNode *root = new TreeNode("main", "block");
+        generateTree(root);
+        cout<<root->treeDFS();
     }
-    DFA();
-    file.close();
-
-    cout<<"\n\n----TREE DFS----\n\n";
-    TreeNode *root = new TreeNode("main", "block");
-    generateTree(root);
-    cout<<root->treeDFS();
+    else cout<<"\n\n----SYNTAX FAILURE----\n----TREE NOT GENERATED----\n";
     return 0;
 }

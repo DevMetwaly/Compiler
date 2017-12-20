@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 push 0 stack
 (1) check table (current token + stack top)
 (2) do action
@@ -39,46 +38,4 @@ while true:
 	
 	else
 		return false
-=======
-push 0 stack
-(1) check table (current token + stack top)
-(2) do action
-
-==========
-
-seudo code
-
-==========
-
-Stack = []
-
-push(0)
-
-while true:
-
-	s = stack_top
-	
-	if (s == nonTerminal)
-		temp = pop()
-		goto = table[top()][temp]
-		push(temp)
-		push(goto)
-		
-	else if(s==number)
-		if(table[s][input[i]] == 'R')
-			pop() //number
-			pop() //token
-			push(rules[table[s][input[i]]])
-			
-		else(table[s][input[i]] == 'S')
-			push(input[i])
-			push(table[s][input[i]])
-			i++
-			
-	else if(s=="accept")
-		return true
-	
-	else
-		return false
->>>>>>> fc91d4136402d64af73d3d2344295eb954246250
 		
