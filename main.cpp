@@ -14,7 +14,18 @@ vector<string>types;
 vector<vector<string> > commands;
 vector<vector<string> > ctypes;
 
+struct Pair{
+    string s;
+    int n;
+};
+
 map<string, map <string,vector<string> > >table1;
+
+map<string, map <string, Pair > >tableLR;
+
+void build_LR(){
+
+}
 
 void build_parser_table(){
     vector <string> v;
