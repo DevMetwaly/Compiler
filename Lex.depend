@@ -72,3 +72,15 @@
 	<string.h>
 	<iomanip>
 
+1513792467 source:d:\github\compiler\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<stack>
+	<map>
+	<string.h>
+	<iomanip>
+	<string.h>
+	<stdlib.h>
+
