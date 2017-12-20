@@ -10,6 +10,9 @@
 #include <stdlib.h>
 using namespace std;
 
+#define LLparser 1
+#define LRparser 1
+
 vector<string>tokens;
 vector<string>types;
 vector<vector<string> > commands;
@@ -23,6 +26,13 @@ struct pairLR{
 map<string, map <string,vector<string> > >table1;
 map<string, map <string, pairLR > >tableLR;
 vector<pairLR>rules;
+int stoi(string s){
+    int res=0;
+    for(int i=0;i<s.size();i++){
+        res=res*10+(s[i]-'0');
+    }
+    return res;
+}
 
 void build_LR(){
     pairLR p;
@@ -41,7 +51,7 @@ void build_LR(){
 //td
     p.s="acc";
     p.n="0";
-    tableLR["1"]["S"]=p;
+    tableLR["1"][";"]=p;
 //td
     p.s="s";
     p.n="5";
@@ -56,7 +66,7 @@ void build_LR(){
     tableLR["3"]["identifier"]=p;
 //td
     p.s="g";
-    p.n="5";
+    p.n="6";
     tableLR["3"]["Z"]=p;
 //td
     p.s="r";
@@ -85,7 +95,7 @@ void build_LR(){
 //td
     p.s="s";
     p.n="10";
-    tableLR["8"]["id"]=p;
+    tableLR["8"]["num"]=p;
 //td
     p.s="g";
     p.n="9";
@@ -153,7 +163,7 @@ void build_LR(){
 //td
     p.s="s";
     p.n="10";
-    tableLR["13"]["id"]=p;
+    tableLR["13"]["num"]=p;
 //td
     p.s="g";
     p.n="18";
@@ -165,7 +175,7 @@ void build_LR(){
 //td
     p.s="s";
     p.n="10";
-    tableLR["14"]["id"]=p;
+    tableLR["14"]["num"]=p;
 //td
     p.s="g";
     p.n="19";
@@ -177,7 +187,7 @@ void build_LR(){
 //td
     p.s="s";
     p.n="10";
-    tableLR["15"]["id"]=p;
+    tableLR["15"]["num"]=p;
 //td
     p.s="g";
     p.n="20";
@@ -189,7 +199,7 @@ void build_LR(){
 //td
     p.s="s";
     p.n="10";
-    tableLR["16"]["id"]=p;
+    tableLR["16"]["num"]=p;
 //td
     p.s="g";
     p.n="21";
@@ -264,7 +274,7 @@ void build_LR_rules(){
     rules.push_back(p);
 
     p.s="Y";
-    p.n="1";
+    p.n="0";
     rules.push_back(p);
 }
 
@@ -630,7 +640,7 @@ void stack_print(stack<string> s){
         ss=ss+' '+s.top();
         s.pop();
     }
-    cout<<setw(25)<<ss;
+    cout<<setw(45)<<ss;
 
 }
 
@@ -645,7 +655,7 @@ bool parser(vector<string>Class,vector <string> command ,map<string, map<string,
         stack_print(s);
         if(s.empty()) return false;
         string top=s.top();
-        string token=(strcmp(Class[i].c_str(),"keyword")==0|| strcmp(Class[i].c_str(),"operator")==0 ||strcmp(Class[i].c_str(),"paran")==0)? command[i] : Class[i]; //bally
+        string token=(strcmp(Class[i].c_str(),"keyword")==0|| strcmp(Class[i].c_str(),"operator")==0 ||strcmp(Class[i].c_str(),"paran")==0)? command[i] : Class[i];
 
         string sss=command[i];
         for(int j=i+1;j<Class.size();j++){
@@ -679,39 +689,52 @@ bool parser(vector<string>Class,vector <string> command ,map<string, map<string,
 
 }
 
-int stoi(string s){
-    int res=0;
-    for(int i=0;i<s.size();i++){
-        res=res*10+(s[i]-'0');
-    }
-    return res;
-}
 
-bool LRparser(vector<string>Class,vector <string> command ,map<string, map<string,LRpair > > table,vector <LRpair> LRrules){
+bool LRparsing(vector<string>Class,vector <string> command ,map<string, map<string,pairLR > > table,vector <pairLR> LRrules){
     stack <string> s;
     s.push("0");
     int i=0;
+    cout<<setw(35)<<"STACK"<<setw(25)<<"INPUT"<<setw(25)<<"ACTION\n\n";
     while(i<Class.size()){
+        stack_print(s);
+        string sss=command[i];
+        for(int j=i+1;j<Class.size();j++){
+            sss+=' '+command[j];
+        }
+        cout<<setw(25)<<sss;
         string top=s.top();
         //nonTerminal
         if(isupper(top[0])){
             s.pop();
             string nu=s.top();
             s.push(top);
-            if(!(table.find(nu)!=table.end() && table[nu].find(top)!=table[top].end()))
+            if(!(table.find(nu)!=table.end() && table[nu].find(top)!=table[top].end())){
+                    cout<<setw(25);
+                cout<<"NOT EXIST\n";
                 return false;
-            LRpair t = table[nu][top];
+            }
+            pairLR t = table[nu][top];
+            cout<<setw(20);
+            cout<<t.s<<t.n<<endl;
             s.push(t.n);
+
         }
         else{
-            if(!(table.find(top)!=table.end() && table[top].find(Class[i])!=table[Class[i]].end()))
+            string token=(strcmp(Class[i].c_str(),"keyword")==0|| strcmp(Class[i].c_str(),"operator")==0 ||strcmp(Class[i].c_str(),"paran")==0)? command[i] : Class[i];
+
+            if(!(table.find(top)!=table.end() && table[top].find(token)!=table[top].end())){
+                    cout<<setw(25);
+                    cout<<"NOT EXISTasaaassa\n";
                 return false;
-            LRpair t=table[top][Class[i]];
+            }
+            pairLR t=table[top][token];
+            cout<<setw(20);
+            cout<<t.s<<t.n<<endl;
             if(strcmp(t.s.c_str(),"acc")==0){
                 return true;
             }
             else if(strcmp(t.s.c_str(),"r")==0){
-                LRpair t2= LRrules[stoi(t.n)];
+                pairLR t2= LRrules[stoi(t.n)];
                 int j=stoi(t2.n);
                 while(j--){
                     s.pop();
@@ -720,11 +743,12 @@ bool LRparser(vector<string>Class,vector <string> command ,map<string, map<strin
                 s.push(t2.s);
 
             }else{
-                s.push(Class[i]);
+                s.push(token);
                 s.push(t.n);
                 i++;
             }
         }
+
     }
     return false;
 }
@@ -1141,11 +1165,22 @@ int main(){
 
     cout<<"\n---ALGORITHM PREVIEW---\n\n";
     int fail = 0;
-    for(int i=0;i<commands.size();i++){
-        if(parser(ctypes[i],commands[i],table1)) cout<<"success 1\n";
-        else { cout<<"Fail\n"; fail = 1; }
-        cout<<"\n\n\n";
+    if(LLparser)
+        for(int i=0;i<commands.size();i++){
+            if(parser(ctypes[i],commands[i],table1)) cout<<"success 1\n";
+            else { cout<<"Fail\n"; fail = 1; }
+            cout<<"\n\n\n";
+        }
+    build_LR();
+    build_LR_rules();
+    if(LRparser){
+        for(int i=0;i<commands.size();i++){
+            if(LRparsing(ctypes[i],commands[i],tableLR,rules)) cout<<"success 1\n";
+            else { cout<<"Fail\n"; fail = 1; }
+            cout<<"\n\n\n";
+        }
     }
+
     file.close();
 
     if(!fail){
@@ -1159,3 +1194,5 @@ int main(){
 
     return 0;
 }
+
+
