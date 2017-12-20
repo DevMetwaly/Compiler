@@ -6,7 +6,8 @@
 #include <map>
 #include <string.h>
 #include <iomanip>
-
+#include <string.h>
+#include <stdlib.h>
 using namespace std;
 
 vector<string>tokens;
@@ -16,6 +17,10 @@ vector<vector<string> > ctypes;
 
 map<string, map <string,vector<string> > >table1;
 
+struct LRpair{
+    string s;
+    string n;
+};
 
 void build_parser_table(){
     vector <string> v;
@@ -427,6 +432,54 @@ bool parser(vector<string>Class,vector <string> command ,map<string, map<string,
     return true;
 
 }
+int stoi(string s){
+    int res=0;
+    for(int i=0;i<s.size();i++){
+        res=res*10+(s[i]-'0');
+    }
+    return res;
+}
+bool LRparser(vector<string>Class,vector <string> command ,map<string, map<string,LRpair > > table,vector <LRpair> LRrules){
+    stack <string> s;
+    s.push("0");
+    int i=0;
+    while(i<Class.size()){
+        string top=s.top();
+        //nonTerminal
+        if(isupper(top[0])){
+            s.pop();
+            string nu=s.top();
+            s.push(top);
+            if(!(table.find(nu)!=table.end() && table[nu].find(top)!=table[top].end()))
+                return false;
+            LRpair t = table[nu][top];
+            s.push(t.n);
+        }
+        else{
+            if(!(table.find(top)!=table.end() && table[top].find(Class[i])!=table[Class[i]].end()))
+                return false;
+            LRpair t=table[top][Class[i]];
+            if(strcmp(t.s.c_str(),"acc")==0){
+                return true;
+            }
+            else if(strcmp(t.s.c_str(),"r")==0){
+                LRpair t2= LRrules[stoi(t.n)];
+                int j=stoi(t2.n);
+                while(j--){
+                    s.pop();
+                    s.pop();
+                }
+                s.push(t2.s);
+
+            }else{
+                s.push(Class[i]);
+                s.push(t.n);
+                i++;
+            }
+        }
+    }
+    return false;
+}
 
 class TreeNode
 {
@@ -652,8 +705,6 @@ TreeNode *infixHandle(string ss){
     return postfixTree;
 }
 
-
-
 int currentTok=0;
 void generateTree(TreeNode *parent){
 
@@ -787,5 +838,6 @@ int main(){
     TreeNode *root = new TreeNode("main", "block");
     generateTree(root);
     cout<<root->treeDFS();
+
     return 0;
 }
