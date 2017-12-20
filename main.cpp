@@ -921,17 +921,7 @@ int main(){
         generateTree(root);
         cout<<root->treeDFS();
     }
-<<<<<<< HEAD
-    DFA();
-    file.close();
-
-    cout<<"\n\n----TREE DFS----\n\n";
-    TreeNode *root = new TreeNode("main", "block");
-    generateTree(root);
-    cout<<root->treeDFS();
-
-=======
     else cout<<"\n\n----SYNTAX FAILURE----\n----TREE NOT GENERATED----\n";
->>>>>>> 575d81a728aab901a43f6a3eafe2b47cfb8a245c
+
     return 0;
 }
